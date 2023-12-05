@@ -60,61 +60,58 @@ const Board = ({
     return (sourceIndex == destIndex);
   };
 
-  const onDragEnd = (result) => {
+const onDragEnd = (result) => {
+  if (!result.destination) {
+    return;
+  }
 
-    if (!result.destination) {
-      return;
-    }
-  
-    const src = result.source;
-    const dest = result.destination;
-  
-    if (!isDropAllowed(src, dest)) {
-      return;
-    }
-  
-    if (result.combine) {
-      if (result.type === "COLUMN") {
-        const shallow = [...ordered];
-        shallow.splice(result.source.index, 1);
-        setOrdered(shallow);
-        return;
-      }
-  
-      const column = columns[result.source.droppableId];
-      const withQuoteRemoved = [...column];
-  
-      withQuoteRemoved.splice(result.source.index, 1);
-  
-      const orderedColumns = {
-        ...columns,
-        [result.source.droppableId]: withQuoteRemoved
-      };
-      setColumns(orderedColumns);
-      return;
-    }
-  
-    if (result.type === "COLUMN") {
-      const reorderedorder = reorder(ordered, src.index, dest.index);
-  
-      setOrdered(reorderedorder);
+  const { source, destination, combine } = result;
 
-       // Send the updated column order back to the parent component
-       if (onColumnOrderChange) {
-        onColumnOrderChange(reorderedorder);
-      }
-  
-      return;
-    }
-  
-    const data = reorderQuoteMap({
-      quoteMap: columns,
-      source: src,
-      destination: dest
+  // Check if the drag is within the same column
+  if (source.droppableId === destination.droppableId) {
+    const columnKey = source.droppableId;
+    const quotesInColumn = [...columns[columnKey]];
+    const [removedQuote] = quotesInColumn.splice(source.index, 1);
+    quotesInColumn.splice(destination.index, 0, removedQuote);
+
+    setColumns({
+      ...columns,
+      [columnKey]: quotesInColumn,
     });
-  
-    setColumns(data.quoteMap);
-  };
+  } else if (combine) {
+    // Handle the case where a quote is combined with another column
+    const sourceColumnKey = source.droppableId;
+    const destinationColumnKey = destination.droppableId;
+
+    const sourceColumn = [...columns[sourceColumnKey]];
+    const destinationColumn = [...columns[destinationColumnKey]];
+
+    const [removedQuote] = sourceColumn.splice(source.index, 1);
+    destinationColumn.splice(destination.index, 0, removedQuote);
+
+    setColumns({
+      ...columns,
+      [sourceColumnKey]: sourceColumn,
+      [destinationColumnKey]: destinationColumn,
+    });
+  } else {
+    // Handle the case where a quote is moved to a different column
+    const sourceColumnKey = source.droppableId;
+    const destinationColumnKey = destination.droppableId;
+
+    const sourceColumn = [...columns[sourceColumnKey]];
+    const destinationColumn = [...columns[destinationColumnKey]];
+
+    const [removedQuote] = sourceColumn.splice(source.index, 1);
+    destinationColumn.splice(destination.index, 0, removedQuote);
+
+    setColumns({
+      ...columns,
+      [sourceColumnKey]: sourceColumn,
+      [destinationColumnKey]: destinationColumn,
+    });
+  }
+};
 
   const handleButtonClick = (buttonId) => {
     // Check which quotes have been put in the pseudocode section

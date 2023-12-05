@@ -245,15 +245,30 @@ export const quotes = [
   },
 ];
 
-const getByAuthor = (author, items) =>
-  items.filter((quote) => quote.author === author);
 
+// Helper function to shuffle an array
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+};
 
-export const authorQuoteMap = () =>
-  authors.reduce(
-    (previous, author) => ({
-      ...previous,
-      [author.name]: getByAuthor(author, quotes),
-    }),
-    { }
-  );
+// Shuffle the entire quotes array
+const shuffledQuotes = [...quotes];
+
+shuffleArray(shuffledQuotes);
+
+export const shuffledQuotesData = {
+  authors,
+  quotes: shuffledQuotes,
+  getByAuthor: (author, items) => items.filter((quote) => quote.author === author),
+  authorQuoteMap: () =>
+    authors.reduce(
+      (previous, author) => ({
+        ...previous,
+        [author.name]: shuffledQuotes.filter((quote) => quote.author === author),
+      }),
+      {}
+    ),
+};

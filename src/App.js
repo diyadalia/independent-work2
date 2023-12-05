@@ -4,13 +4,15 @@ import { Row, Col, Card, CardBody } from "reactstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { authorQuoteMap } from "./dnd/mockData";
+import { shuffledQuotesData } from "./dnd/mockData";
 
 import Board from "./dnd/board/Board";
 
 export default function App() {
+  const { authors, quotes, getByAuthor, authorQuoteMap } = shuffledQuotesData;
+
   const data = {
-    medium: authorQuoteMap()
+    medium: authorQuoteMap(),
   };
 
   return (
