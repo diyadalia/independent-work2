@@ -117,21 +117,40 @@ const Board = ({
   };
 
   const handleButtonClick = (buttonId) => {
-    // Check quotes in the corresponding column based on the button's id
-    const columnKey = ordered[buttonId];
-    const quotesInColumn = columns[columnKey];
+    // Check which quotes have been put in the pseudocode section
+    const pseudoKey = ordered[buttonId];
+    const quotesInPseudo = columns[pseudoKey];
 
-    for (let i = 0; i < quotesInColumn.length; i++) {
-      console.log(quotesInColumn[i]);
-      if (quotesInColumn[i].isCorrect) {
-        console.log('true');
+    for (let i = 0; i < quotesInPseudo.length; i++) {
+      const correct = quotesInPseudo[i].isCorrect;
+      const pos = quotesInPseudo[i].finalPos;
+      if (correct && (pos == i)) {
+        console.log('true!');
+      }
+      else if (correct && (pos != i)) {
+        console.log('wrong position!');
       }
       else {
-        console.log('false');
+        console.log('NOT a line of pseudocode');
       }
-
     }
-   
+
+    columns[pseudoKey] = quotesInPseudo.map((quote, index) => ({...quote, currLoc: (quote.isCorrect === true && quote.finalPos === index)}))
+
+    // Check if any correct quotes are still in the code bank
+    const bankKey = ordered[buttonId+4];
+    const quotesInBank = columns[bankKey];
+
+    for (let i = 0; i < quotesInBank.length; i++) {
+      const correct = quotesInBank[i].isCorrect;
+      if (correct) {
+        console.log('this should be in the pseudocode!');
+      }
+    }
+
+    columns[bankKey] = quotesInBank.map((quote) => ({...quote, currLoc: (!quote.isCorrect)}))
+  
+    setColumns({ ...columns });
   };
 
   return (

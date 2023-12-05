@@ -56,7 +56,7 @@ const Container = styled.div``;
 /* stylelint-enable */
 
 const InnerQuoteList = React.memo(function InnerQuoteList(props) {
-  const { quotes, quoteStatus } = props;
+  const { quotes } = props;
 
   if (!quotes) {
     return null;
@@ -64,16 +64,20 @@ const InnerQuoteList = React.memo(function InnerQuoteList(props) {
   
   return quotes.map((quote, index) => (
     <Draggable key={quote.id} draggableId={quote.id} index={index}>
-      {(dragProvided, dragSnapshot) => (
-        <QuoteItem
-          key={quote.id}
-          quote={quote}
-          isDragging={dragSnapshot.isDragging}
-          isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
-          provided={dragProvided}
-          isCorrect={quote.isCorrect}
-        />
-      )}
+     {(dragProvided, dragSnapshot) => {
+        
+        return (
+          <QuoteItem
+            key={quote.id}
+            quote={quote}
+            isDragging={dragSnapshot.isDragging}
+            isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
+            provided={dragProvided}
+            isCorrect={quote.isCorrect}
+            currLoc={quote.currLoc}
+          />
+        );
+      }}
     </Draggable>
   ));
 });

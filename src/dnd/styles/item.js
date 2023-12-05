@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@xstyled/styled-components';
 import { borderRadius, grid } from './constants';
 
-const getBackgroundColor = (isDragging, isGroupedOver, isCorrect, authorColors) => {
+const getBackgroundColor = (isDragging, isGroupedOver, currLoc, authorColors) => {
   if (isDragging) {
     return authorColors.soft;
   }
@@ -10,8 +10,13 @@ const getBackgroundColor = (isDragging, isGroupedOver, isCorrect, authorColors) 
   if (isGroupedOver) {
     return '#EBECF0';
   }
-
-  return isCorrect ? '#FFFFFF' : 'red';
+  console.log(currLoc);
+  if (currLoc === false) {
+    return 'red';
+  }
+  else {
+    return '#FFFFFF';
+  }
 };
 
 const getBorderColor = (isDragging, authorColors) =>
@@ -42,7 +47,7 @@ const Container = styled.a`
   border: 2px solid transparent;
   border-color: ${(props) => getBorderColor(props.isDragging, props.colors)};
   background-color: ${(props) =>
-    getBackgroundColor(props.isDragging, props.isGroupedOver, props.isCorrect, props.colors)};
+    getBackgroundColor(props.isDragging, props.isGroupedOver, props.currLoc, props.colors)};
   box-shadow: ${({ isDragging }) => (isDragging ? `2px 2px 1px #A5ADBA` : 'none')};
   box-sizing: border-box;
   padding: ${grid}px;
@@ -125,7 +130,8 @@ function QuoteItem(props) {
       isGroupedOver={isGroupedOver}
       isClone={isClone}
       colors={quote.author.colors}
-      isCorrect={quote.isCorrect}
+      currLoc={quote.currLoc}
+      finalPos={quote.finalPos}
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
