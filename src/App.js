@@ -4,14 +4,13 @@ import { Row, Col, Card, CardBody } from "reactstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { generateQuoteMap } from "./dnd/mockData";
+import { authorQuoteMap } from "./dnd/mockData";
 
 import Board from "./dnd/board/Board";
 
 export default function App() {
   const data = {
-    medium: generateQuoteMap(100),
-    large: generateQuoteMap(500)
+    medium: authorQuoteMap()
   };
 
   return (
@@ -20,7 +19,7 @@ export default function App() {
         <Col xs={12}>
           <Card>
             <CardBody>
-              <h2>React DnD Testing</h2>
+              <h2>FindEVStations.java</h2>
             </CardBody>
           </Card>
         </Col>

@@ -5,6 +5,7 @@ import { grid, borderRadius } from "../styles/constants";
 import { Draggable } from "react-beautiful-dnd";
 import QuoteList from "../styles/list";
 import Title from "../styles/title";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
   margin: ${grid}px;
@@ -24,12 +25,15 @@ const Header = styled.div`
   &:hover {
     background-color: ${colors.G50};
   }
+  width: 75vh
 `;
 
 const Column = (props) => {
   const title = props.title;
   const quotes = props.quotes;
   const index = props.index;
+  const quoteStatus = props.quoteStatus;
+
   return (
     <Draggable draggableId={title} index={index}>
       {(provided, snapshot) => (
@@ -53,6 +57,7 @@ const Column = (props) => {
             internalScroll={props.isScrollable}
             isCombineEnabled={Boolean(props.isCombineEnabled)}
             useClone={Boolean(props.useClone)}
+            quoteStatus={quoteStatus}
           />
         </Container>
       )}

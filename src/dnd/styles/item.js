@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@xstyled/styled-components';
 import { borderRadius, grid } from './constants';
 
-const getBackgroundColor = (isDragging, isGroupedOver, authorColors) => {
+const getBackgroundColor = (isDragging, isGroupedOver, isCorrect, authorColors) => {
   if (isDragging) {
     return authorColors.soft;
   }
@@ -11,7 +11,7 @@ const getBackgroundColor = (isDragging, isGroupedOver, authorColors) => {
     return '#EBECF0';
   }
 
-  return '#FFFFFF';
+  return isCorrect ? '#FFFFFF' : 'red';
 };
 
 const getBorderColor = (isDragging, authorColors) =>
@@ -42,7 +42,7 @@ const Container = styled.a`
   border: 2px solid transparent;
   border-color: ${(props) => getBorderColor(props.isDragging, props.colors)};
   background-color: ${(props) =>
-    getBackgroundColor(props.isDragging, props.isGroupedOver, props.colors)};
+    getBackgroundColor(props.isDragging, props.isGroupedOver, props.isCorrect, props.colors)};
   box-shadow: ${({ isDragging }) => (isDragging ? `2px 2px 1px #A5ADBA` : 'none')};
   box-sizing: border-box;
   padding: ${grid}px;
@@ -67,15 +67,6 @@ const Container = styled.a`
 
   /* flexbox */
   display: flex;
-`;
-
-const Avatar = styled.img`
-  width: ${imageSize}px;
-  height: ${imageSize}px;
-  border-radius: 50%;
-  margin-right: ${grid}px;
-  flex-shrink: 0;
-  flex-grow: 0;
 `;
 
 const Content = styled.div`
@@ -106,25 +97,6 @@ const Footer = styled.div`
   align-items: center;
 `;
 
-const Author = styled.small`
-  color: ${(props) => props.colors.hard};
-  flex-grow: 0;
-  margin: 0;
-  background-color: ${(props) => props.colors.soft};
-  border-radius: ${borderRadius}px;
-  font-weight: normal;
-  padding: ${grid / 2}px;
-`;
-
-const QuoteId = styled.small`
-  flex-grow: 1;
-  flex-shrink: 1;
-  margin: 0;
-  font-weight: normal;
-  text-overflow: ellipsis;
-  text-align: right;
-`;
-
 function getStyle(provided, style) {
   if (!style) {
     return provided.draggableProps.style;
@@ -153,6 +125,7 @@ function QuoteItem(props) {
       isGroupedOver={isGroupedOver}
       isClone={isClone}
       colors={quote.author.colors}
+      isCorrect={quote.isCorrect}
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
@@ -162,17 +135,9 @@ function QuoteItem(props) {
       data-index={index}
       aria-label={`${quote.author.name} quote ${quote.content}`}
     >
-      <Avatar src={quote.author.avatarUrl} alt={quote.author.name} />
       {isClone ? <CloneBadge>Clone</CloneBadge> : null}
       <Content>
         <BlockQuote>{quote.content}</BlockQuote>
-        <Footer>
-          <Author colors={quote.author.colors}>{quote.author.name}</Author>
-          <QuoteId>
-            id:
-            {quote.id}
-          </QuoteId>
-        </Footer>
       </Content>
     </Container>
   );

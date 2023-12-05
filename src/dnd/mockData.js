@@ -1,163 +1,211 @@
 import { colors } from "@atlaskit/theme";
-import finnImg from "./static/finn-min.png";
-import bmoImg from "./static/bmo-min.png";
-import princessImg from "./static/princess-min.png";
-import jakeImg from "./static/jake-min.png";
 
-const jake = {
+const distance = {
   id: "1",
-  name: "Jake",
-  url: "http://adventuretime.wikia.com/wiki/Jake",
-  avatarUrl: jakeImg,
+  name: "distance() Pseudocode",
   colors: {
     soft: colors.Y50,
     hard: colors.N400A
   }
 };
 
-const BMO = {
+const allDistances = {
   id: "2",
-  name: "BMO",
-  url: "http://adventuretime.wikia.com/wiki/BMO",
-  avatarUrl: bmoImg,
+  name: "allDistances() Pseudocode",
   colors: {
     soft: colors.G50,
     hard: colors.N400A
   }
 };
 
-const finn = {
+const findMin = {
   id: "3",
-  name: "Finn",
-  url: "http://adventuretime.wikia.com/wiki/Finn",
-  avatarUrl: finnImg,
+  name: "findMin() Pseudocode",
   colors: {
     soft: colors.B50,
     hard: colors.N400A
   }
 };
 
-const princess = {
+const main = {
   id: "4",
-  name: "Princess bubblegum",
-  url: "http://adventuretime.wikia.com/wiki/Princess_Bubblegum",
-  avatarUrl: princessImg,
+  name: "main() Pseudocode",
   colors: {
     soft: colors.P50,
     hard: colors.N400A
   }
 };
 
-export const authors = [jake, BMO, finn, princess];
+const distanceB = {
+  id: "5",
+  name: "distance() Bank",
+  colors: {
+    soft: colors.Y50,
+    hard: colors.N400A
+  }
+};
+
+const allDistancesB = {
+  id: "6",
+  name: "allDistances() Bank",
+  colors: {
+    soft: colors.G50,
+    hard: colors.N400A
+  }
+};
+
+const findMinB = {
+  id: "7",
+  name: "findMin() Bank",
+  colors: {
+    soft: colors.B50,
+    hard: colors.N400A
+  }
+};
+
+const mainB = {
+  id: "8",
+  name: "main() Bank",
+  colors: {
+    soft: colors.P50,
+    hard: colors.N400A
+  }
+};
+
+export const authors = [distance, allDistances, findMin, main, distanceB, allDistancesB, findMinB, mainB];
 
 export const quotes = [
   {
     id: "1",
-    content: "Sometimes life is scary and dark",
-    author: BMO
+    content: "Convert x1, y1, x2, y2 to radians",
+    author: authors[4],
+    isCorrect: false,
   },
   {
     id: "2",
-    content:
-      "Sucking at something is the first step towards being sorta good at something.",
-    author: jake
+    content: "Calculate sin = sin(x1) * sin(x2)",
+    author: authors[4],
+    isCorrect: false, 
   },
   {
     id: "3",
-    content: "You got to focus on what's real, man",
-    author: jake
+    content: "Calculate cos = cos(x1) * cos(x2) * cos(y1 - y2)",
+    author: authors[4],
+    isCorrect: true,
   },
   {
     id: "4",
-    content: "Is that where creativity comes from? From sad biz?",
-    author: finn
+    content: "Set RADIUS = 3963.0  // Earth radius in miles",
+    author: authors[4], 
+    isCorrect: true,
   },
   {
     id: "5",
-    content: "Homies help homies. Always",
-    author: finn
+    content: "Calculate dis = RADIUS * acos(sin + cos)",
+    author: authors[4], 
+    isCorrect: true,
   },
   {
     id: "6",
-    content: "Responsibility demands sacrifice",
-    author: princess
+    content: "Return dis",
+    author: authors[4],
+    isCorrect: true, 
   },
   {
     id: "7",
-    content: "That's it! The answer was so simple, I was too smart to see it!",
-    author: princess
+    content: "Initialize distances array with length x.length",
+    author: authors[5], 
+    isCorrect: true,
   },
   {
     id: "8",
-    content:
-      "People make mistakes. It's all a part of growing up and you never really stop growing",
-    author: finn
+    content: "For i from 0 to x.length - 1:",
+    author: authors[5], 
+    isCorrect: true,
   },
   {
     id: "9",
-    content: "Don't you always call sweatpants 'give up on life pants,' Jake?",
-    author: finn
+    content: "distances[i] = distance(cx, cy, x[i], y[i])",
+    author: authors[5], 
+    isCorrect: true,
   },
   {
     id: "10",
-    content: "I should not have drunk that much tea!",
-    author: princess
+    content: "Return distances",
+    author: authors[5], 
+    isCorrect: true,
   },
   {
     id: "11",
-    content: "Please! I need the real you!",
-    author: princess
+    content: "Set minDis = INFINITY",
+    author: authors[6],
+    isCorrect: true,
   },
   {
     id: "12",
-    content: "Haven't slept for a solid 83 hours, but, yeah, I'm good.",
-    author: princess
-  }
+    content: "Set minIndex = 0",
+    author: authors[6], 
+    isCorrect: true,
+  },
+  {
+    id: "13",
+    content: "For i from 0 to distances.length - 1:",
+    author: authors[6],
+    isCorrect: true,
+  },
+  {
+    id: "14",
+    content: " If distances[i] < minDis:",
+    author: authors[6], 
+    isCorrect: true,
+  },
+  {
+    id: "15",
+    content: "Set minDis = distances[i]",
+    author: authors[6], 
+    isCorrect: true,
+  },
+  {
+    id: "16",
+    content: "Set minIndex = i",
+    author: authors[6], 
+    isCorrect: true,
+  },
+  {
+    id: "17",
+    content: " Return minIndex",
+    author: authors[6], 
+    isCorrect: true,
+  },
+  {
+    id: "18",
+    content: "For i from 0 to x.length - 1:",
+    author: authors[7], 
+    isCorrect: true,
+  },
+  {
+    id: "19",
+    content: "distances[i] = distance(cx, cy, x[i], y[i])",
+    author: authors[7], 
+    isCorrect: true,
+  },
+  {
+    id: "20",
+    content: "Return distances",
+    author: authors[7], 
+    isCorrect: true,
+  },
 ];
-
-// So we do not have any clashes with our hardcoded ones
-let idCount = quotes.length + 1;
-
-export const getQuotes = (count) =>
-  Array.from({ length: count }, (v, k) => k).map(() => {
-    const random = quotes[Math.floor(Math.random() * quotes.length)];
-
-    const custom = {
-      ...random,
-      id: `G${idCount++}`
-    };
-
-    return custom;
-  });
-
-export const getAuthors = (count) =>
-  Array.from({ length: count }, (v, k) => k).map(() => {
-    const random = authors[Math.floor(Math.random() * authors.length)];
-
-    const custom = {
-      ...random,
-      id: `author-${idCount++}`
-    };
-
-    return custom;
-  });
 
 const getByAuthor = (author, items) =>
   items.filter((quote) => quote.author === author);
 
-export const authorQuoteMap: QuoteMap = authors.reduce(
-  (previous, author) => ({
-    ...previous,
-    [author.name]: getByAuthor(author, quotes)
-  }),
-  {}
-);
 
-export const generateQuoteMap = (quoteCount) =>
+export const authorQuoteMap = () =>
   authors.reduce(
     (previous, author) => ({
       ...previous,
-      [author.name]: getQuotes(quoteCount / authors.length)
+      [author.name]: getByAuthor(author, quotes),
     }),
-    {}
+    { }
   );

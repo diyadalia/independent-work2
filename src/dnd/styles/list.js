@@ -17,6 +17,8 @@ export const getBackgroundColor = (isDraggingOver, isDraggingFrom) => {
   return '#EBECF0';
 };
 
+const scrollContainerHeight = '70vh';
+
 const Wrapper = styled.div`
   background-color: ${(props) => getBackgroundColor(props.isDraggingOver, props.isDraggingFrom)};
   display: flex;
@@ -27,10 +29,11 @@ const Wrapper = styled.div`
   padding-bottom: 0;
   transition: background-color 0.2s ease, opacity 0.1s ease;
   user-select: none;
-  width: 250px;
+  width: 75vh;
+  height: ${scrollContainerHeight}; // Set the height to 100vh
 `;
 
-const scrollContainerHeight = 250;
+
 
 const DropZone = styled.div`
   /* stop the list collapsing when empty */
@@ -53,7 +56,13 @@ const Container = styled.div``;
 /* stylelint-enable */
 
 const InnerQuoteList = React.memo(function InnerQuoteList(props) {
-  return props.quotes.map((quote, index) => (
+  const { quotes, quoteStatus } = props;
+
+  if (!quotes) {
+    return null;
+  }
+  
+  return quotes.map((quote, index) => (
     <Draggable key={quote.id} draggableId={quote.id} index={index}>
       {(dragProvided, dragSnapshot) => (
         <QuoteItem
@@ -62,6 +71,7 @@ const InnerQuoteList = React.memo(function InnerQuoteList(props) {
           isDragging={dragSnapshot.isDragging}
           isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
           provided={dragProvided}
+          isCorrect={quote.isCorrect}
         />
       )}
     </Draggable>
