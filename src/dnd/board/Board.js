@@ -47,6 +47,8 @@ const Board = ({
 }) => {
   const [columns, setColumns] = useState(initial);
   const [ordered, setOrdered] = useState(Object.keys(initial));
+  const [pseudoWarnings, setPseudoWarnings] = useState([]);
+  const [bankWarnings, setBankWarnings] = useState([]);
 
   const isDropAllowed = (source, destination) => {
     const sourceCols = ["distance() Pseudocode","allDistances() Pseudocode", "findMin() Pseudocode", "main() Pseudocode",
@@ -117,39 +119,51 @@ const onDragEnd = (result) => {
   }
 };
 
+const getPseudoWarning = (quote) => {
+  const { isCorrect, finalPos } = quote;
+
+  if (isCorrect && finalPos === quote.index) {
+    return;
+  } else if (isCorrect && finalPos !== quote.index) {
+    quote.currLoc = false;
+    return 'Incorrect position';
+  } else {
+    quote.currLoc = false;
+    return 'This should not be in the pseudocode';
+  }
+};
+
+const getBankWarning = (quote) => {
+  const { isCorrect } = quote;
+
+  if (isCorrect) {
+    quote.currLoc = false;
+    return 'This should be in the pseudocode';
+  }
+};
+
 const handleButtonClick = (buttonId) => {
   // Check which quotes have been put in the pseudocode section
   const pseudoKey = ordered[buttonId];
   const quotesInPseudo = columns[pseudoKey];
+  const pseudoWarnings = quotesInPseudo.map(getPseudoWarning);
 
-  for (let i = 0; i < quotesInPseudo.length; i++) {
-    const correct = quotesInPseudo[i].isCorrect;
-    const pos = quotesInPseudo[i].finalPos;
-    if (correct && (pos == i)) {
-      console.log('true!');
-    }
-    else if (correct && (pos != i)) {
-      console.log('wrong position!');
-    }
-    else {
-      console.log('NOT a line of pseudocode');
-    }
-  }
-
-  columns[pseudoKey] = quotesInPseudo.map((quote, index) => ({...quote, currLoc: (quote.isCorrect === true && quote.finalPos === index)}))
+  columns[pseudoKey] = quotesInPseudo.map((quote, index) => ({
+    ...quote,
+    currLoc: quote.isCorrect === true && quote.finalPos === index,
+    warning: pseudoWarnings[index], // Pass the specific warning message
+  }));
 
   // Check if any correct quotes are still in the code bank
-  const bankKey = ordered[buttonId+4];
+  const bankKey = ordered[buttonId + 4];
   const quotesInBank = columns[bankKey];
+  const bankWarnings = quotesInBank.map(getBankWarning);
 
-  for (let i = 0; i < quotesInBank.length; i++) {
-    const correct = quotesInBank[i].isCorrect;
-    if (correct) {
-      console.log('this should be in the pseudocode!');
-    }
-  }
-
-  columns[bankKey] = quotesInBank.map((quote) => ({...quote, currLoc: (!quote.isCorrect)}))
+  columns[bankKey] = quotesInBank.map((quote, index) => ({
+    ...quote,
+    currLoc: !quote.isCorrect,
+    warning: bankWarnings[index], // Pass the specific warning message
+  }));
 
   setColumns({ ...columns });
 };
