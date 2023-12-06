@@ -81,7 +81,7 @@ export const quotes = [
     author: authors[4],
     isCorrect: true,
     finalPos: 0,
-    currLoc: null,
+    currLoc: true,
   },
   {
     id: "21",

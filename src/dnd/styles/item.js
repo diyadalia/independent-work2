@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@xstyled/styled-components';
 import { borderRadius, grid } from './constants';
 
-const getBackgroundColor = (isDragging, isGroupedOver, currLoc, authorColors) => {
+const getBackgroundColor = (isDragging, isGroupedOver, authorColors) => {
   if (isDragging) {
     return authorColors.soft;
   }
@@ -10,13 +10,7 @@ const getBackgroundColor = (isDragging, isGroupedOver, currLoc, authorColors) =>
   if (isGroupedOver) {
     return '#EBECF0';
   }
-  console.log(currLoc);
-  if (currLoc === false) {
-    return 'red';
-  }
-  else {
-    return '#FFFFFF';
-  }
+  return '#FFFFFF';
 };
 
 const getBorderColor = (isDragging, authorColors) =>
@@ -96,10 +90,31 @@ const BlockQuote = styled.div`
   }
 `;
 
-const Footer = styled.div`
+const TooltipMessage = styled.span`
+  display: ${(props) => (props.isActive ? 'block' : 'none')};
+  position: relative;
+  background-color: #f00;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  margin-right: 10px;
+`;
+
+
+const ExclamationCircle = styled.span`
+  color: red;
+  margin-left: 5px;
+  cursor: pointer;
+  position: relative;
+  top: 3px;
+
+  &:hover + ${TooltipMessage} {
+    display: block;
+  }
+`;
+
+const WarningContainer = styled.div`
   display: flex;
-  margin-top: ${grid}px;
-  align-items: center;
 `;
 
 function getStyle(provided, style) {
@@ -121,7 +136,7 @@ function getStyle(provided, style) {
 // things we should be doing in the selector as we do not know if consumers
 // will be using PureComponent
 function QuoteItem(props) {
-  const { quote, isDragging, isGroupedOver, provided, style, isClone, index } = props;
+  const { quote, isDragging, isGroupedOver, provided, style, isClone, index, isDropAllowed } = props;
 
   return (
     <Container
@@ -132,6 +147,8 @@ function QuoteItem(props) {
       colors={quote.author.colors}
       currLoc={quote.currLoc}
       finalPos={quote.finalPos}
+      isDropAllowed={isDropAllowed}
+      get
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
@@ -144,6 +161,19 @@ function QuoteItem(props) {
       {isClone ? <CloneBadge>Clone</CloneBadge> : null}
       <Content>
         <BlockQuote>{quote.content}</BlockQuote>
+        {!quote.currLoc && (
+          <WarningContainer>
+            <ExclamationCircle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+              </svg>
+            </ExclamationCircle>
+            <TooltipMessage>
+              {'Not correct!'}
+            </TooltipMessage>
+          </WarningContainer>
+        )}
       </Content>
     </Container>
   );

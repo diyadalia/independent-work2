@@ -96,59 +96,63 @@ const onDragEnd = (result) => {
     });
   } else {
     // Handle the case where a quote is moved to a different column
-    const sourceColumnKey = source.droppableId;
-    const destinationColumnKey = destination.droppableId;
+    const isMoveAllowed = isDropAllowed(source, destination);
 
-    const sourceColumn = [...columns[sourceColumnKey]];
-    const destinationColumn = [...columns[destinationColumnKey]];
+    if (isMoveAllowed) {
+      const sourceColumnKey = source.droppableId;
+      const destinationColumnKey = destination.droppableId;
 
-    const [removedQuote] = sourceColumn.splice(source.index, 1);
-    destinationColumn.splice(destination.index, 0, removedQuote);
+      const sourceColumn = [...columns[sourceColumnKey]];
+      const destinationColumn = [...columns[destinationColumnKey]];
 
-    setColumns({
-      ...columns,
-      [sourceColumnKey]: sourceColumn,
-      [destinationColumnKey]: destinationColumn,
-    });
+      const [removedQuote] = sourceColumn.splice(source.index, 1);
+      destinationColumn.splice(destination.index, 0, removedQuote);
+
+      setColumns({
+        ...columns,
+        [sourceColumnKey]: sourceColumn,
+        [destinationColumnKey]: destinationColumn,
+      });
+    }
   }
 };
 
-  const handleButtonClick = (buttonId) => {
-    // Check which quotes have been put in the pseudocode section
-    const pseudoKey = ordered[buttonId];
-    const quotesInPseudo = columns[pseudoKey];
+const handleButtonClick = (buttonId) => {
+  // Check which quotes have been put in the pseudocode section
+  const pseudoKey = ordered[buttonId];
+  const quotesInPseudo = columns[pseudoKey];
 
-    for (let i = 0; i < quotesInPseudo.length; i++) {
-      const correct = quotesInPseudo[i].isCorrect;
-      const pos = quotesInPseudo[i].finalPos;
-      if (correct && (pos == i)) {
-        console.log('true!');
-      }
-      else if (correct && (pos != i)) {
-        console.log('wrong position!');
-      }
-      else {
-        console.log('NOT a line of pseudocode');
-      }
+  for (let i = 0; i < quotesInPseudo.length; i++) {
+    const correct = quotesInPseudo[i].isCorrect;
+    const pos = quotesInPseudo[i].finalPos;
+    if (correct && (pos == i)) {
+      console.log('true!');
     }
-
-    columns[pseudoKey] = quotesInPseudo.map((quote, index) => ({...quote, currLoc: (quote.isCorrect === true && quote.finalPos === index)}))
-
-    // Check if any correct quotes are still in the code bank
-    const bankKey = ordered[buttonId+4];
-    const quotesInBank = columns[bankKey];
-
-    for (let i = 0; i < quotesInBank.length; i++) {
-      const correct = quotesInBank[i].isCorrect;
-      if (correct) {
-        console.log('this should be in the pseudocode!');
-      }
+    else if (correct && (pos != i)) {
+      console.log('wrong position!');
     }
+    else {
+      console.log('NOT a line of pseudocode');
+    }
+  }
 
-    columns[bankKey] = quotesInBank.map((quote) => ({...quote, currLoc: (!quote.isCorrect)}))
-  
-    setColumns({ ...columns });
-  };
+  columns[pseudoKey] = quotesInPseudo.map((quote, index) => ({...quote, currLoc: (quote.isCorrect === true && quote.finalPos === index)}))
+
+  // Check if any correct quotes are still in the code bank
+  const bankKey = ordered[buttonId+4];
+  const quotesInBank = columns[bankKey];
+
+  for (let i = 0; i < quotesInBank.length; i++) {
+    const correct = quotesInBank[i].isCorrect;
+    if (correct) {
+      console.log('this should be in the pseudocode!');
+    }
+  }
+
+  columns[bankKey] = quotesInBank.map((quote) => ({...quote, currLoc: (!quote.isCorrect)}))
+
+  setColumns({ ...columns });
+};
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -158,6 +162,8 @@ const onDragEnd = (result) => {
         direction="horizontal"
         ignoreContainerClipping={Boolean(containerHeight)}
         isCombineEnabled={isCombineEnabled}
+        isDropAllowed={isDropAllowed} 
+
       >
         {(provided) => (
           <Container ref={provided.
@@ -172,7 +178,7 @@ const onDragEnd = (result) => {
                   isScrollable={withScrollableColumns}
                   isCombineEnabled={isCombineEnabled}
                   useClone={useClone}
-
+                  isDropAllowed={isDropAllowed}
                 />
               ))}
             </ColumnContainer>
@@ -186,7 +192,7 @@ const onDragEnd = (result) => {
                   isScrollable={withScrollableColumns}
                   isCombineEnabled={isCombineEnabled}
                   useClone={useClone}
-
+                  isDropAllowed={isDropAllowed}
                 />
               ))}
             </ColumnContainer>
@@ -206,7 +212,6 @@ const onDragEnd = (result) => {
     </DragDropContext>
   );
 };
-
 Board.defaultProps = {
   isCombineEnabled: false
 };

@@ -56,8 +56,7 @@ const Container = styled.div``;
 /* stylelint-enable */
 
 const InnerQuoteList = React.memo(function InnerQuoteList(props) {
-  const { quotes } = props;
-
+  const { quotes, isDropAllowed } = props;
   if (!quotes) {
     return null;
   }
@@ -75,6 +74,7 @@ const InnerQuoteList = React.memo(function InnerQuoteList(props) {
             provided={dragProvided}
             isCorrect={quote.isCorrect}
             currLoc={quote.currLoc}
+            isDropAllowed={isDropAllowed}
           />
         );
       }}
@@ -83,14 +83,14 @@ const InnerQuoteList = React.memo(function InnerQuoteList(props) {
 });
 
 function InnerList(props) {
-  const { quotes, dropProvided } = props;
+  const { quotes, dropProvided, isDropAllowed } = props;
   const title = props.title ? <Title>{props.title}</Title> : null;
 
   return (
     <Container>
       {title}
       <DropZone ref={dropProvided.innerRef}>
-        <InnerQuoteList quotes={quotes} />
+        <InnerQuoteList quotes={quotes} isDropAllowed={isDropAllowed} />
         {dropProvided.placeholder}
       </DropZone>
     </Container>
@@ -104,6 +104,7 @@ export default function QuoteList(props) {
     scrollContainerStyle,
     isDropDisabled,
     isCombineEnabled,
+    isDropAllowed,
     listId = 'LIST',
     listType,
     style,
@@ -119,6 +120,7 @@ export default function QuoteList(props) {
       ignoreContainerClipping={ignoreContainerClipping}
       isDropDisabled={isDropDisabled}
       isCombineEnabled={isCombineEnabled}
+      isDropAllowed={isDropAllowed}
       renderClone={
         useClone
           ? (provided, snapshot, descriptor) => (
@@ -127,6 +129,7 @@ export default function QuoteList(props) {
                 provided={provided}
                 isDragging={snapshot.isDragging}
                 isClone
+                isDropAllowed={isDropAllowed}
               />
             )
           : null
