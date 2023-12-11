@@ -1,33 +1,21 @@
+// App.js
 import React from "react";
-
-import { Row, Col, Card, CardBody } from "reactstrap";
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from "./Homepage";
+import Exam1 from "./Exam1"; // Import the new component
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { shuffledQuotesData } from "./dnd/mockData";
-
-import Board from "./dnd/board/Board";
-
-export default function App() {
-  const { authors, quotes, getByAuthor, authorQuoteMap } = shuffledQuotesData;
-
-  const data = {
-    medium: authorQuoteMap(),
-  };
-
+const App = () => {
   return (
-    <>
-      <Row className="justify-content-center text-center">
-        <Col xs={12}>
-          <Card>
-            <CardBody>
-              <h2>FindEVStations.java</h2>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-
-      <Board initial={data.medium} withScrollableColumns />
-    </>
+      <Routes>
+        <Route path="/app" element={<HomePage />} />
+        <Route path="/exam1" element={<Exam1 />} />
+      </Routes>
   );
-}
+};
+
+export default App;
+
+
+
+
