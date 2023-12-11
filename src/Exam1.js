@@ -6,7 +6,7 @@ import Board from "./dnd/board/Board";
 import { useNavigate } from "react-router-dom";
 
 const Exam1 = () => {
-  const { authorQuoteMap } = shuffledQuotesData;
+  const { authors, authorQuoteMap } = shuffledQuotesData; // Make sure to get the authors array
   const data = {
     medium: authorQuoteMap(),
   };
@@ -14,7 +14,6 @@ const Exam1 = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // Navigate back to the homepage when the button is clicked
     navigate("/app");
   };
 
@@ -25,7 +24,6 @@ const Exam1 = () => {
           <Card>
             <CardBody>
               <h2>FindEVStations.java</h2>
-              {/* Add a button with an onClick handler */}
               <button className="btn btn-primary" onClick={handleClick}>
                 Home
               </button>
@@ -33,9 +31,14 @@ const Exam1 = () => {
           </Card>
         </Col>
       </Row>
-      <Board initial={data.medium} withScrollableColumns />
+      <Board
+        initial={data.medium}
+        withScrollableColumns
+        authors={authors} 
+      />
     </>
   );
 };
 
 export default Exam1;
+

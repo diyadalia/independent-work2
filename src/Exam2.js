@@ -6,7 +6,7 @@ import Board from "./dnd/board/Board";
 import { useNavigate } from "react-router-dom";
 
 const Exam2 = () => {
-  const { authorQuoteMap } = shuffledQuotesData;
+  const { authors, authorQuoteMap } = shuffledQuotesData;
   const data = {
     medium: authorQuoteMap(),
   };
@@ -33,7 +33,10 @@ const Exam2 = () => {
           </Card>
         </Col>
       </Row>
-      <Board initial={data.medium} withScrollableColumns />
+      <Board 
+        initial={data.medium}
+        withScrollableColumns
+        authors={authors}  />
     </>
   );
 };

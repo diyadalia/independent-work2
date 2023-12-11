@@ -1,34 +1,16 @@
 import { colors } from "@atlaskit/theme";
 
-const distance = {
+const score = {
   id: "1",
-  name: "distance() Pseudocode",
+  name: "score() Pseudocode",
   colors: {
     soft: colors.Y50,
     hard: colors.N400A
   }
 };
 
-const allDistances = {
-  id: "2",
-  name: "allDistances() Pseudocode",
-  colors: {
-    soft: colors.G50,
-    hard: colors.N400A
-  }
-};
-
-const findMin = {
-  id: "3",
-  name: "findMin() Pseudocode",
-  colors: {
-    soft: colors.B50,
-    hard: colors.N400A
-  }
-};
-
 const main = {
-  id: "4",
+  id: "2",
   name: "main() Pseudocode",
   colors: {
     soft: colors.P50,
@@ -36,35 +18,17 @@ const main = {
   }
 };
 
-const distanceB = {
-  id: "5",
-  name: "distance() Bank",
+const scoreB = {
+  id: "3",
+  name: "score() Bank",
   colors: {
     soft: colors.Y50,
     hard: colors.N400A
   }
 };
 
-const allDistancesB = {
-  id: "6",
-  name: "allDistances() Bank",
-  colors: {
-    soft: colors.G50,
-    hard: colors.N400A
-  }
-};
-
-const findMinB = {
-  id: "7",
-  name: "findMin() Bank",
-  colors: {
-    soft: colors.B50,
-    hard: colors.N400A
-  }
-};
-
 const mainB = {
-  id: "8",
+  id: "4",
   name: "main() Bank",
   colors: {
     soft: colors.P50,
@@ -72,13 +36,13 @@ const mainB = {
   }
 };
 
-export const authors = [distance, allDistances, findMin, main, distanceB, allDistancesB, findMinB, mainB];
+export const authors = [score, main, scoreB, mainB];
 
 export const quotes = [
   {
     id: "1",
     content: "LOLOLOL",
-    author: authors[4],
+    author: authors[2],
     isCorrect: true,
     finalPos: 0,
     currLoc: true,
@@ -86,7 +50,7 @@ export const quotes = [
   {
     id: "21",
     content: "HIIIII",
-    author: authors[4],
+    author: authors[2],
     isCorrect: false,
     finalPos: 0,
     currLoc: true,
@@ -94,7 +58,7 @@ export const quotes = [
   {
     id: "22",
     content: "SOUPPPPP",
-    author: authors[4],
+    author: authors[3],
     isCorrect: false,
     finalPos: 0,
     currLoc: true,
@@ -102,7 +66,7 @@ export const quotes = [
   {
     id: "23",
     content: "Calculate sin = sin(x1)",
-    author: authors[4],
+    author: authors[3],
     isCorrect: false,
     finalPos: 0,
     currLoc: true,

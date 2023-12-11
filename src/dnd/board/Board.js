@@ -43,23 +43,21 @@ const Board = ({
   initial, 
   useClone,
   containerHeight,
-  withScrollableColumns
+  withScrollableColumns,
+  authors
 }) => {
   const [columns, setColumns] = useState(initial);
   const [ordered, setOrdered] = useState(Object.keys(initial));
-  const [pseudoWarnings, setPseudoWarnings] = useState([]);
-  const [bankWarnings, setBankWarnings] = useState([]);
+  
+  const authorsArray = authors.map((author) => author.name);
+  const halfLength = authors.length / 2.0;
+  const sourceCols = authorsArray;
+  const destCols = authorsArray.slice(halfLength).concat(authorsArray.slice(0, halfLength));
 
   const isDropAllowed = (source, destination) => {
-    const sourceCols = ["distance() Pseudocode","allDistances() Pseudocode", "findMin() Pseudocode", "main() Pseudocode",
-    "distance() Bank", "allDistances() Bank", "findMin() Bank", "main() Bank"]
-    const destCols = ["distance() Bank", "allDistances() Bank", "findMin() Bank", "main() Bank", 
-    "distance() Pseudocode","allDistances() Pseudocode", "findMin() Pseudocode", "main() Pseudocode"];
-
     const sourceIndex = sourceCols.indexOf(source.droppableId);
     const destIndex = destCols.indexOf(destination.droppableId);
-   
-    return (sourceIndex == destIndex);
+    return sourceIndex === destIndex;
   };
 
 const onDragEnd = (result) => {
@@ -155,7 +153,7 @@ const handleButtonClick = (buttonId) => {
   }));
 
   // Check if any correct quotes are still in the code bank
-  const bankKey = ordered[buttonId + 4];
+  const bankKey = ordered[buttonId + halfLength];
   const quotesInBank = columns[bankKey];
   const bankWarnings = quotesInBank.map(getBankWarning);
 
@@ -183,7 +181,7 @@ const handleButtonClick = (buttonId) => {
           <Container ref={provided.
           Ref} {...provided.droppableProps}>
             <ColumnContainer>
-              {ordered.slice(0, 4).map((key, index) => (
+              {ordered.slice(0, halfLength).map((key, index) => (
                 <Column
                   key={key}
                   index={index}
@@ -197,10 +195,10 @@ const handleButtonClick = (buttonId) => {
               ))}
             </ColumnContainer>
             <ColumnContainer>
-              {ordered.slice(4, 8).map((key, index) => (
+              {ordered.slice(halfLength).map((key, index) => (
                 <Column
                   key={key}
-                  index={index + 4}
+                  index={index + halfLength}
                   title={key}
                   quotes={columns[key]}
                   isScrollable={withScrollableColumns}
@@ -211,11 +209,12 @@ const handleButtonClick = (buttonId) => {
               ))}
             </ColumnContainer>
             <ColumnContainer>
-              <ButtonContainer>
-              <Button onClick={() => handleButtonClick(0)}>Check Pseudocode</Button>
-                <Button onClick={() => handleButtonClick(1)}>Check Pseudocode</Button>
-                <Button onClick={() => handleButtonClick(2)}>Check Pseudocode</Button>
-                <Button onClick={() => handleButtonClick(3)}>Check Pseudocode</Button>
+            <ButtonContainer>
+                {Array.from({ length: halfLength }, (_, index) => (
+                  <Button key={index} onClick={() => handleButtonClick(index)}>
+                    Check Pseudocode
+                  </Button>
+                ))}
               </ButtonContainer>
               
             </ColumnContainer>
@@ -232,6 +231,11 @@ Board.defaultProps = {
 
 Board.propTypes = {
   isCombineEnabled: PropTypes.bool,
+  initial: PropTypes.object.isRequired,
+  useClone: PropTypes.bool,
+  containerHeight: PropTypes.number,
+  withScrollableColumns: PropTypes.bool,
+  authors: PropTypes.array.isRequired,
 };
 
 export default Board;
