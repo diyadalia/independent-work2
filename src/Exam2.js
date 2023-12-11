@@ -1,11 +1,11 @@
 // Exam1.js
 import React from "react";
 import { Row, Col, Card, CardBody } from "reactstrap";
-import { shuffledQuotesData } from "./dnd/mockData1";
+import { shuffledQuotesData } from "./dnd/mockData2";
 import Board from "./dnd/board/Board";
 import { useNavigate } from "react-router-dom";
 
-const Exam1 = () => {
+const Exam2 = () => {
   const { authorQuoteMap } = shuffledQuotesData;
   const data = {
     medium: authorQuoteMap(),
@@ -24,7 +24,7 @@ const Exam1 = () => {
         <Col xs={12}>
           <Card>
             <CardBody>
-              <h2>FindEVStations.java</h2>
+              <h2>testing.java</h2>
               {/* Add a button with an onClick handler */}
               <button className="btn btn-primary" onClick={handleClick}>
                 Home
@@ -38,4 +38,4 @@ const Exam1 = () => {
   );
 };
 
-export default Exam1;
+export default Exam2;
