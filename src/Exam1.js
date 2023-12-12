@@ -14,7 +14,7 @@ const Exam1 = () => {
 
   const handleClickHome = () => {
     // Navigate back to the homepage when the "Home" button is clicked
-    navigate("/app");
+    navigate("/independent-work2");
   };
 
   const handleDownloadPDF = () => {

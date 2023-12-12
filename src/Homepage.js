@@ -8,8 +8,8 @@ const HomePage = () => {
     <Container className="text-center mt-5">
       <Row>
         <Col>
-          <h1 className="display-4">Welcome to My App</h1>
-          <p className="lead">Explore the world of programming with ease.</p>
+          <h1 className="display-4">Pseudo-Coding</h1>
+          <p className="lead">Learn to program by practicing with pseudocode!</p>
           <p>
             Pseudocode is a way of planning out a program using plain
             language that resembles actual code. It helps programmers

@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const App = () => {
   return (
       <Routes>
-        <Route path="/app" element={<HomePage />} />
+        <Route path="/independent-work2" element={<HomePage />} />
         <Route path="/exam1" element={<Exam1 />} />
         <Route path="/exam2" element={<Exam2 />} />
       </Routes>
