@@ -1,4 +1,3 @@
-// Exam1.js
 import React from "react";
 import { Row, Col, Card, CardBody } from "reactstrap";
 import { shuffledQuotesData } from "./dnd/mockData2";
@@ -13,9 +12,14 @@ const Exam2 = () => {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    // Navigate back to the homepage when the button is clicked
+  const handleClickHome = () => {
+    // Navigate back to the homepage when the "Home" button is clicked
     navigate("/app");
+  };
+
+  const handleDownloadPDF = () => {
+    // Open the specified URL in a new tab when the "Download PDF" button is clicked
+    window.open("https://www.cs.princeton.edu/courses/archive/fall23/cos126/static/exams/s23-pe1/exam.pdf", "_blank");
   };
 
   return (
@@ -23,12 +27,23 @@ const Exam2 = () => {
       <Row className="justify-content-center text-center">
         <Col xs={12}>
           <Card>
-            <CardBody>
-              <h2>testing.java</h2>
-              {/* Add a button with an onClick handler */}
-              <button className="btn btn-primary" onClick={handleClick}>
-                Home
-              </button>
+            <CardBody className="text-center">
+              {/* Heading centered */}
+              <h2>ChefOlympics.java</h2>
+              <Row className="justify-content-between">
+                <Col xs={6} className="text-left">
+                  {/* "Home" button */}
+                  <button className="btn btn-primary" onClick={handleClickHome}>
+                    Home
+                  </button>
+                </Col>
+                <Col xs={6} className="text-right">
+                  {/* "Exam" button */}
+                  <button className="btn btn-secondary" onClick={handleDownloadPDF}>
+                    Exam Instructions
+                  </button>
+                </Col>
+              </Row>
             </CardBody>
           </Card>
         </Col>
@@ -36,7 +51,8 @@ const Exam2 = () => {
       <Board 
         initial={data.medium}
         withScrollableColumns
-        authors={authors}  />
+        authors={authors}
+      />
     </>
   );
 };

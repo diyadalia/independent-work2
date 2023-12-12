@@ -6,36 +6,41 @@ import PropTypes from "prop-types";
 import Column from "./Column";
 import reorder, { reorderQuoteMap } from "../reorder";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { borderRadius, grid } from '../styles/constants';
+
 
   const Container = styled.div`
-  background-color: ${colors.B100};
-  min-height: 100vh;
-  min-width: 100vw;
-  display: flex;  /* Use flex container to arrange columns */
+  background-color: #D8B2E3;
+  display: flex;  
+  flex: 1
 `;
 
 const ColumnContainer = styled.div`
-  flex: 1;  /* Each column takes equal space */
-  padding: 8px;  /* Adjust the padding as needed */
+  flex: 1;  
+  align-items: center
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1;
+  height: 100%;
+  margin: 0% 0;
 `;
 
 const Button = styled.button`
-  margin: 200px 10px;
   background-color: #bebebe;
   color: black;
-  border: none;
-  padding: 10px 25px;
+  padding: ${grid}px;
+  width: 150px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
+  justify-content: center;
 `;
 
 const Board = ({

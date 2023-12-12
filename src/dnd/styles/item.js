@@ -38,7 +38,7 @@ const CloneBadge = styled.div`
 
 const Container = styled.a`
   border-radius: ${borderRadius}px;
-  border: 2px solid transparent;
+  border: 0px solid transparent;
   border-color: ${(props) => getBorderColor(props.isDragging, props.colors)};
   background-color: ${(props) =>
     getBackgroundColor(props.isDragging, props.isGroupedOver, props.currLoc, props.colors)};
@@ -66,6 +66,7 @@ const Container = styled.a`
 
   /* flexbox */
   display: flex;
+  flex: 1
 `;
 
 const Content = styled.div`

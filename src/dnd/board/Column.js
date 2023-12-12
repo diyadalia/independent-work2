@@ -11,6 +11,7 @@ const Container = styled.div`
   margin: ${grid}px;
   display: flex;
   flex-direction: column;
+  flex: 1
 `;
 
 const Header = styled.div`
@@ -25,7 +26,7 @@ const Header = styled.div`
   &:hover {
     background-color: ${colors.G50};
   }
-  width: 75vh
+  flex: 1
 `;
 
 const Column = (props) => {

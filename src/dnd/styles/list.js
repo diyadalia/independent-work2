@@ -17,7 +17,6 @@ export const getBackgroundColor = (isDraggingOver, isDraggingFrom) => {
   return '#EBECF0';
 };
 
-const scrollContainerHeight = '70vh';
 
 const Wrapper = styled.div`
   background-color: ${(props) => getBackgroundColor(props.isDraggingOver, props.isDraggingFrom)};
@@ -29,26 +28,21 @@ const Wrapper = styled.div`
   padding-bottom: 0;
   transition: background-color 0.2s ease, opacity 0.1s ease;
   user-select: none;
-  width: 75vh;
-  height: ${scrollContainerHeight}; // Set the height to 100vh
+  flex: 1
 `;
 
 
 
 const DropZone = styled.div`
   /* stop the list collapsing when empty */
-  min-height: ${scrollContainerHeight}px;
-  /*
-    not relying on the items for a margin-bottom
-    as it will collapse when the list is empty
-  */
+  min-height: 50vh;
   padding-bottom: ${grid}px;
 `;
 
 const ScrollContainer = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: ${scrollContainerHeight}px;
+  max-height: 50vh;
 `;
 
 /* stylelint-disable block-no-empty */
