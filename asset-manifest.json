@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/independent-work2/static/css/main.d2e7dc57.css",
+    "main.js": "/independent-work2/static/js/main.6d596262.js",
+    "index.html": "/independent-work2/index.html",
+    "main.d2e7dc57.css.map": "/independent-work2/static/css/main.d2e7dc57.css.map",
+    "main.6d596262.js.map": "/independent-work2/static/js/main.6d596262.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d2e7dc57.css",
+    "static/js/main.6d596262.js"
+  ]
+}
